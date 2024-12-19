@@ -1,0 +1,9 @@
+INDEX VERSION 1.134+C:\ProjectWorkspace\PlaywrightLearning\.metadata\.plugins\org.eclipse.jdt.core
+336242594.index
+1875167549.index
+1740175491.index
+3970958132.index
+1865797976.index
+2934360753.index
+2180707109.index
+81951196.index
