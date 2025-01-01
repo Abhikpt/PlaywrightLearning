@@ -36,8 +36,12 @@ public class MainClass extends  BaseClass
 		TestLocators tl = new TestLocators(obj.page);
 		
 	//	tl.TestLearningWithAbhiLogin();
-		tl.FormsElementLocator()	;
+	//	tl.FormsElementLocator()	;
+	//	tl.AlertHandeling();
+	//	tl.IframeHandeling();
+		tl.HandlingTabsAndPopups();
 	//	tl.AddTocart();
+
 		
 		
 		

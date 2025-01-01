@@ -8,6 +8,7 @@ import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.BrowserType;
 import com.microsoft.playwright.ElementHandle;
+import com.microsoft.playwright.FrameLocator;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Locator.FillOptions;
 import com.microsoft.playwright.Page;
@@ -32,24 +33,17 @@ public class TestLocators {
 	public void TestLearningWithAbhiLogin()
 	{
 		
-		_page.navigate("https://abhikpt.github.io/LearningwithAbhi/Login");
-		
-		
+		_page.navigate("https://abhikpt.github.io/LearningwithAbhi/Login");		
 		_page.click("#app > div > div:nth-child(2) > div > main > button");    //locating by using css selector		
 		
 		
 		_page.fill("#inputEmail","Abhishek kumar");    //locate using CSS + action			
 		_page.locator("[id='inputEmail']").fill("Singh");      //locator using [attribute = value] -> action	     
-	    _page.locator("id=inputEmail").fill("abhishek");          // this format work for id locator only
-	     
-	     
-	     _page.fill("[type=\"password\"]", "1996");                    //attribute locator
-	     
+	    _page.locator("id=inputEmail").fill("abhishek");          // this format work for id locator only	     
+	     _page.fill("[type=\"password\"]", "1996");                    //attribute locator	     
 	     _page.click("//*[@id=\"app\"]/div/div[2]/div/main/div/div/div/button[1]");          //Xpath
 	     
-	     System.out.println("form submitted "); 
-	     
-	     
+	     System.out.println("form submitted "); 	     
 	     Locator HomePageIdentifier =  _page.locator("main.container div div div div  .display-4");    //css selector
 	    // Locator LocatUsingXpath = _page.locator("//div[contains(@class,\"bg-primary\")]/ div/div/div/h3");   //xpath
 	     
@@ -64,24 +58,10 @@ public class TestLocators {
 	{
 		
 		// navigate to form page
-		_page.navigate("https://www.way2automation.com/way2auto_jquery/index.php");
-		
-		   // Hover over the heading
-			/*
-			 * _page.locator("##menu-item-27617 > a > span.menu-text").hover();
-			 * 
-			 * // Wait for the submenu or hover element to appear
-			 * _page.locator("#menu-item-27578 a").waitFor(new
-			 * Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-			 * 
-			 * // Click on the submenu item _page.locator("#menu-item-27578 a").click();
-			 */
-		
-		  System.out.println("Navigated on Demo 01"); 
-		  
+		_page.navigate("https://www.way2automation.com/way2auto_jquery/index.php");		  		
+		  System.out.println("Navigated on Demo 01"); 		  
 		  // Xpath + AND
-		  _page.fill("//input[@name='name'  and @type='text']", "Tester A");
-		  
+		  _page.fill("//input[@name='name'  and @type='text']", "Tester A");		  
 		  
 		  // CSS selectors
 		  _page.fill("form fieldset input[name=phone]", "9394959697");
@@ -93,9 +73,7 @@ public class TestLocators {
 		  _page.fill("//*[@id=\"load_form\"]/fieldset[7]/input", "123456");				
 		_page.selectOption("fieldset select[name=country]", "Bhutan");		
 		_page.waitForTimeout(4000);
-		
-		
-		
+				
 		
 		// select all the options from dropdown
 		List<ElementHandle> elements = _page.querySelectorAll("fieldset select[name=country] option ");				
@@ -103,8 +81,91 @@ public class TestLocators {
 		for(ElementHandle element : elements)
 		{
 			System.out.println(element.innerText() +"---------"+ element.getAttribute("value"));
-		}
+		}		
+	}
+	
+	
+	public void AlertHandeling() throws InterruptedException
+	{
+		_page.navigate("https://mail.rediff.com/cgi-bin/login.cgi");
 		
+
+		
+		// it will trigger when an dialog appear
+			_page.onDialog(dialog -> {
+			
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				
+				dialog.accept();			
+				System.out.println(dialog.message());
+				
+			});
+			
+			_page.locator("[type='submit']").click();		
+			
+	}
+	
+	
+	
+	
+	public void IframeHandeling()
+	{
+		_page.navigate("https://www.way2automation.com/way2auto_jquery/frames-and-windows.php#load_box");
+		
+	   		
+		// locating frame -> then internal elements -> 		
+	FrameLocator frm =	_page.frameLocator("div#example-1-tab-3 iframe[class=\"demo-frame\"]");
+	Locator FrametoElement = frm.locator("div.farme_window a");	
+	System.out.println(FrametoElement.innerText());
+	
+	Locator	 frames = _page.locator("iframe");		
+	System.out.println("frame count on the page is: "+ frames.count() );	
+	for(int i = 0 ; i< frames.count()-1 ; i++ )
+	{
+		System.out.println("farame c is: " + frames.nth(i).getAttribute("class"));
+	}
+	}
+	
+	
+	
+	
+	public void HandlingTabsAndPopups()
+	{
+		_page.navigate("https://sso.teachable.com/secure/673/identity/sign_up/otp");
+		
+		
+		Page popup = _page.waitForPopup( () ->
+				{
+						_page.locator("[aria-label='Privacy']").nth(0).click();
+					
+						try {
+							Thread.sleep(2000);
+						} catch (InterruptedException e) {
+							
+							e.printStackTrace();
+						}
+					
+				});
+		
+		popup.locator("a#header-sign-up-btn").click();
+		
+		popup.locator("input#name").fill("ABC Tester");
+		
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			
+			e.printStackTrace();
+		} 
+		
+		
+		popup.close();
+		_page.close();
+	
 		
 	}
 	
