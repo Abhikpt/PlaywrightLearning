@@ -37,11 +37,25 @@ public class MainClass extends  BaseClass
 		
 	//	tl.TestLearningWithAbhiLogin();
 	//	tl.FormsElementLocator()	;
+	//	tl.DropdownSelection();
+		tl.TestResizable();
+	//	tl.LocatingLinkinABlock();
+	//	tl.CheckBoxSelections();
+		tl.ShadowDomElements();
+		
+		
 	//	tl.AlertHandeling();
 	//	tl.IframeHandeling();
-		tl.HandlingTabsAndPopups();
+	//	tl.HandlingTabsAndPopups();
 	//	tl.AddTocart();
 
+		
+		HandlingComplexUserGestures HCG = new HandlingComplexUserGestures(obj.page);
+		
+//		HCG.HandelMouseHoverMenu();
+//		HCG.HandelSliders();
+//		HCG.HandelDragDrop();
+		
 		
 		
 		
